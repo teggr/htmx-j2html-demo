@@ -1,12 +1,12 @@
-package com.robintegg.htmx.demo;
+package com.robintegg.htmx.demo.web.pages;
 
+import com.robintegg.htmx.demo.contacts.Contact;
 import j2html.rendering.IndentedHtml;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.View;
 
-import java.util.List;
 import java.util.Map;
 
 import static j2html.TagCreator.*;

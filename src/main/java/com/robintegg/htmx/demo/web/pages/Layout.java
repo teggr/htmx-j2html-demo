@@ -1,4 +1,4 @@
-package com.robintegg.htmx.demo;
+package com.robintegg.htmx.demo.web.pages;
 
 import j2html.tags.DomContent;
 import jakarta.servlet.http.HttpServletRequest;

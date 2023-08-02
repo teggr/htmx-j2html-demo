@@ -1,5 +1,7 @@
-package com.robintegg.htmx.demo;
+package com.robintegg.htmx.demo.web;
 
+import com.robintegg.htmx.demo.contacts.Contact;
+import com.robintegg.htmx.demo.contacts.Contacts;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

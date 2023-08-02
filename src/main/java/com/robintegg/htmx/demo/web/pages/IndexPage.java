@@ -1,5 +1,6 @@
-package com.robintegg.htmx.demo;
+package com.robintegg.htmx.demo.web.pages;
 
+import com.robintegg.htmx.demo.contacts.Contact;
 import j2html.rendering.IndentedHtml;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

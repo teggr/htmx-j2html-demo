@@ -1,4 +1,4 @@
-package com.robintegg.htmx.demo;
+package com.robintegg.htmx.demo.contacts;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
