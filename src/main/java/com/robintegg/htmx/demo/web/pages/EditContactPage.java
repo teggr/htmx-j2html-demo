@@ -4,6 +4,7 @@ import com.robintegg.htmx.demo.contacts.Contact;
 import j2html.rendering.IndentedHtml;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -104,7 +105,7 @@ public class EditContactPage implements View {
 
     @Override
     public String getContentType() {
-        return "text/html";
+        return MediaType.TEXT_HTML_VALUE;
     }
 
 }
