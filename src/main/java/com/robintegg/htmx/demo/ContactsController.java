@@ -4,10 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.MapBindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Map;
@@ -47,10 +44,43 @@ public class ContactsController {
             model.addAttribute("errors", bindingResult);
             return "newContactPage";
         } else {
-            contacts.save(c);
+            contacts.add(c);
             redirectAttributes.addAttribute("msg", "Created New Contact");
             return "redirect:/contacts";
         }
+    }
+
+    @GetMapping("/contacts/{id}")
+    public String viewContact(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("contact", contacts.find(id));
+        return "contactPage";
+    }
+
+    @GetMapping("/contacts/{id}/edit")
+    public String editContact(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("contact", contacts.find(id));
+        model.addAttribute("errors", new MapBindingResult(Map.of(), "contact"));
+        return "editContactPage";
+    }
+
+    @PostMapping("/contacts/{id}/edit")
+    public String newContacts(@PathVariable("id") Integer id, @ModelAttribute Contact c, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("contact", c);
+            model.addAttribute("errors", bindingResult);
+            return "editContactPage";
+        } else {
+            contacts.update(id, c);
+            redirectAttributes.addAttribute("msg", "Updated Contact");
+            return "redirect:/contacts/" + id;
+        }
+    }
+
+    @PostMapping("/contacts/{id}/delete")
+    public String deleteContact(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+        contacts.delete(id);
+        redirectAttributes.addAttribute("msg", "Deleted Contact");
+        return "redirect:/contacts";
     }
 
 }

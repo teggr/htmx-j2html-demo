@@ -17,7 +17,10 @@ public class IndexPage implements View {
   @Override
   public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-    Layout.withContent(
+      List<Contact> contacts = (List<Contact>) model.get("contacts");
+      String q = (String) model.get("q");
+
+      Layout.withContent(
         model,
         request,
         form()
@@ -31,7 +34,7 @@ public class IndexPage implements View {
                     .withId("search")
                     .withType("search")
                     .withName("q")
-                    .withValue((String) model.get("q")),
+                    .withValue(q),
                 input()
                     .withType("submit")
                     .withValue("Search")
@@ -46,7 +49,7 @@ public class IndexPage implements View {
                 )
             ),
             tbody(
-                each((List<Contact>) model.get("contacts"), contact -> {
+                each(contacts, contact -> {
                   return tr(
                       td(contact.first()),
                       td(contact.last()),

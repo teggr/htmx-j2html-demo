@@ -24,6 +24,9 @@ public class Layout {
     }
 
     private DomContent getLayout() {
+
+        String msg = (String) model.get("msg");
+
         return join(document(), html(
                 head()
                         .withTitle("Contacts App")
@@ -34,8 +37,8 @@ public class Layout {
                         h1("Contacts.app"),
                         h2("A Demo Contacts Application"),
                         hr(),
-                        iff(model.get("msg") != null,
-                                div((String) model.get("msg")).withClass("box")
+                        iff(msg != null,
+                                div((String) msg).withClass("box")
                         ),
                         div().withClass("container").with(
                                 content

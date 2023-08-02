@@ -14,7 +14,7 @@ import java.util.Optional;
 import static j2html.TagCreator.*;
 
 @Component
-public class NewContactPage implements View {
+public class EditContactPage implements View {
 
     @Override
     public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -24,7 +24,7 @@ public class NewContactPage implements View {
 
         Layout.withContent(
                 model, request, form()
-                        .withAction("/contacts/new")
+                        .withAction("/contacts/" + contact.id() + "/edit")
                         .withMethod("post")
                         .with(
                                 fieldset(
@@ -87,6 +87,12 @@ public class NewContactPage implements View {
                                         ),
                                         button("Save")
                                 )
+                        ),
+                form()
+                        .withAction("/contacts/" + contact.id() + "/delete")
+                        .withMethod("post")
+                        .with(
+                                button("Delete Contact")
                         ),
                 p(
                         a("Back").withHref("/contacts")

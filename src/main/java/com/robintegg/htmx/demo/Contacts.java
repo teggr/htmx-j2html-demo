@@ -9,24 +9,41 @@ import java.util.List;
 @Component
 public class Contacts {
 
-  private List<Contact> contactList = new ArrayList<>();
+    private List<Contact> contactList = new ArrayList<>();
 
-  @PostConstruct
-  void loadContacts() {
-    contactList.add(new Contact(1, "John", "Smith", "123-456-7890", "john@example.comz" ));
-    contactList.add(new Contact(2, "Dana", "Crandith", "123-456-7890", "dcran@example.com" ));
-    contactList.add(new Contact(3, "Edith", "Neutvaar", "123-456-7890", "an@example.com" ));
-  }
+    private int idSequence = 4;
 
-  public List<Contact> all() {
-    return new ArrayList<>(contactList);
-  }
+    @PostConstruct
+    void loadContacts() {
+        contactList.add(new Contact(1, "John", "Smith", "123-456-7890", "john@example.comz"));
+        contactList.add(new Contact(2, "Dana", "Crandith", "123-456-7890", "dcran@example.com"));
+        contactList.add(new Contact(3, "Edith", "Neutvaar", "123-456-7890", "an@example.com"));
+    }
 
-  public List<Contact> search(String q) {
-    return contactList.stream().toList();
-  }
+    public List<Contact> all() {
+        return new ArrayList<>(contactList);
+    }
 
-  public void save(Contact c) {
-    contactList.add(c);
-  }
+    public List<Contact> search(String q) {
+        return contactList.stream().toList();
+    }
+
+    public void add(Contact c) {
+        contactList.add(new Contact(++idSequence, c.first(), c.last(), c.phone(), c.email()));
+    }
+
+    public Contact find(Integer id) {
+        return contactList.stream().filter(c -> c.id().equals(id)).findFirst().orElseThrow();
+    }
+
+    public void update(Integer id, Contact c) {
+        Contact contact = find(id);
+        contactList.remove(contact);
+        contactList.add(new Contact(id, c.first(), c.last(), c.phone(), c.email()));
+    }
+
+    public void delete(Integer id) {
+        Contact contact = find(id);
+        contactList.remove(contact);
+    }
 }
