@@ -26,4 +26,7 @@ public class Contacts {
     return contactList.stream().toList();
   }
 
+  public void save(Contact c) {
+    contactList.add(c);
+  }
 }

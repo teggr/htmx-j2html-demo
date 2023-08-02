@@ -18,6 +18,8 @@ public class IndexPage implements View {
   public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
     Layout.withContent(
+        model,
+        request,
         form()
             .withAction("/contacts")
             .withMethod("get")
