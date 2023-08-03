@@ -39,7 +39,10 @@ public class EditContactPage implements View {
                             .withId("email")
                             .withType("email")
                             .withPlaceholder("Email")
-                            .withValue(contact.email()),
+                            .withValue(contact.email())
+                            .attr("hx-get", "/contacts/" + contact.id() + "/email")
+                            .attr("hx-target", ".error")
+                            .attr("hx-trigger", "change, keyup delay:300ms changed"),
                         span().withClass("error")
                             .withText(
                                 Optional.ofNullable(bindingResult.getFieldError("email")).map(FieldError::toString).orElse("")
