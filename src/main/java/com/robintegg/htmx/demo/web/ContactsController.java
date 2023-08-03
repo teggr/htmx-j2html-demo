@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.MapBindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Map;
 
@@ -79,10 +80,17 @@ public class ContactsController {
     }
 
     @PostMapping("/contacts/{id}/delete")
-    public String deleteContact(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+    public String postDeleteContact(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         contacts.delete(id);
         redirectAttributes.addAttribute("msg", "Deleted Contact");
         return "redirect:/contacts";
+    }
+
+    @DeleteMapping("/contacts/{id}")
+    public RedirectView deleteContact(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+        contacts.delete(id);
+        redirectAttributes.addAttribute("msg", "Deleted Contact");
+        return new RedirectView( "/contacts", true, false);
     }
 
 }
