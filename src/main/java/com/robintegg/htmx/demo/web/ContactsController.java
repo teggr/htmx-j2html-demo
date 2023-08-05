@@ -24,14 +24,20 @@ public class ContactsController {
   }
 
   @GetMapping("/contacts")
-  public String contacts(@RequestParam(name = "q", required = false) String q, @RequestParam(name = "msg", required = false) String msg, Model model) {
+  public String contacts(
+          @RequestParam(name = "q", required = false) String q,
+          @RequestParam(name = "msg", required = false) String msg,
+          @RequestParam(name="page", required = false, defaultValue = "1") int page,
+          Model model
+  ) {
     if (q == null) {
-      model.addAttribute("contacts", contacts.all());
+      model.addAttribute("contacts", contacts.all(page));
     } else {
       model.addAttribute("contacts", contacts.search(q));
     }
     model.addAttribute("q", q);
     model.addAttribute("msg", msg);
+    model.addAttribute("page", page);
     return "indexPage";
   }
 
