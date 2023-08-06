@@ -63,15 +63,18 @@ public class IndexPage implements View {
                                                     a("View").withHref("/contacts/" + contact.id())
                                             )
                                     );
-                                })
-                        )
-                ),
-                div().withStyle("float:right").with(
-                        iff(contacts.hasPrevious(),
-                                a("Previous").withHref("/contacts?page=" + (page - 1))
-                        ),
-                        iff(contacts.hasNext(),
-                                a("Next").withHref("/contacts?page=" + (page + 1))
+                                }),
+                                iff(contacts.hasNext(),
+                                        tr(
+                                                td().withColspan("5").withStyle("text-align: center;").with(
+                                                        button("Load More")
+                                                                .attr("hx-get", "/contacts?page=" + (page + 1))
+                                                                .attr("hx-select", "tbody > tr")
+                                                                .attr("hx-target", "closest tr")
+                                                                .attr("hx-swap", "outerHTML")
+                                                )
+                                        )
+                                )
                         )
                 ),
                 p(
