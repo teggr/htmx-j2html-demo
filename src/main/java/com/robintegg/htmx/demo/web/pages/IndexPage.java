@@ -67,7 +67,8 @@ public class IndexPage implements View {
                                 iff(contacts.hasNext(),
                                         tr(
                                                 td().withColspan("5").withStyle("text-align: center;").with(
-                                                        button("Load More")
+                                                        span("Loading More...")
+                                                                .attr("hx-trigger", "revealed")
                                                                 .attr("hx-get", "/contacts?page=" + (page + 1))
                                                                 .attr("hx-select", "tbody > tr")
                                                                 .attr("hx-target", "closest tr")
