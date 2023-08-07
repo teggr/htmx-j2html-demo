@@ -15,7 +15,7 @@ import java.util.Map;
 import static j2html.TagCreator.*;
 
 @Component
-public class SearchResults implements View {
+public class RowsView implements View {
 
     @Override
     public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -31,6 +31,11 @@ public class SearchResults implements View {
         return each(
                 each(contacts.items(), contact -> {
                     return tr(
+                            td(input()
+                                    .withType("checkbox")
+                                    .withName("selected_contact_ids")
+                                    .withValue("" + contact.id())
+                            ),
                             td(contact.first()),
                             td(contact.last()),
                             td(contact.phone()),

@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -138,6 +139,14 @@ public class ContactsController {
     @ResponseBody
     public String contactCount() {
         return "(" + contacts.count() + " total contacts)";
+    }
+
+    @DeleteMapping("/contacts")
+    public String deleteAll(
+            @RequestParam("selected_contact_ids") List<Integer> ids,
+            Model model) {
+        contacts.delete(ids);
+        return contacts(null,null, "Deleted Contacts!", 1, model);
     }
 
 }

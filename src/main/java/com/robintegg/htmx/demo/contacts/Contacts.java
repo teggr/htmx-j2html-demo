@@ -83,4 +83,7 @@ public class Contacts {
         return contactList.size();
     }
 
+    public void delete(List<Integer> ids) {
+        contactList.removeIf(c -> ids.contains(c.id()));
+    }
 }

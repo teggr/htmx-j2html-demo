@@ -16,10 +16,10 @@ import static j2html.TagCreator.*;
 @Component
 public class IndexPage implements View {
 
-    private final SearchResults searchResults;
+    private final RowsView rowsView;
 
-    public IndexPage(SearchResults searchResults) {
-        this.searchResults = searchResults;
+    public IndexPage(RowsView rowsView) {
+        this.rowsView = rowsView;
     }
 
     @Override
@@ -57,18 +57,25 @@ public class IndexPage implements View {
                                         .withType("submit")
                                         .withValue("Search")
                         ),
-                table(
-                        thead(
-                                tr(
-                                        th("First"),
-                                        th("Last"),
-                                        th("Phone"),
-                                        th("Email")
+                form(
+                        table(
+                                thead(
+                                        tr(
+                                                th(),
+                                                th("First"),
+                                                th("Last"),
+                                                th("Phone"),
+                                                th("Email")
+                                        )
+                                ),
+                                tbody(
+                                        rowsView.include(model)
                                 )
                         ),
-                        tbody(
-                                searchResults.include(model)
-                        )
+                        button("Delete selected contacts")
+                                .attr("hx-confirm", "Are you sure you want to delete these contacts?")
+                                .attr("hx-delete", "/contacts")
+                                .attr("hx-target", "body")
                 ),
                 p(
                         a("Add Contact").withHref("/contacts/new"),
