@@ -16,12 +16,17 @@ import static j2html.TagCreator.*;
 @Component
 public class IndexPage implements View {
 
+    private final SearchResults searchResults;
+
+    public IndexPage(SearchResults searchResults) {
+        this.searchResults = searchResults;
+    }
+
     @Override
     public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         PagedList<Contact> contacts = (PagedList<Contact>) model.get("contacts");
         String q = (String) model.get("q");
-        int page = (int) model.get("page");
 
         Layout.withContent(
                 model,
@@ -37,7 +42,17 @@ public class IndexPage implements View {
                                         .withId("search")
                                         .withType("search")
                                         .withName("q")
-                                        .withValue(q),
+                                        .withValue(q)
+                                        .attr("hx-trigger", "search, keyup delay:200ms changed")
+                                        .attr("hx-get", "/contacts")
+                                        .attr("hx-target", "tbody")
+                                        .attr("hx-select", "tbody tr")
+                                        .attr("hx-push-url", true)
+                                        .attr("hx-indicator", "#spinner"),
+                                img()
+                                        .withId("spinner")
+                                        .withClass("htmx-indicator")
+                                        .withSrc("https://raw.githubusercontent.com/n3r4zzurr0/svg-spinners/main/svg-css/90-ring.svg"),
                                 input()
                                         .withType("submit")
                                         .withValue("Search")
@@ -52,30 +67,7 @@ public class IndexPage implements View {
                                 )
                         ),
                         tbody(
-                                each(contacts.items(), contact -> {
-                                    return tr(
-                                            td(contact.first()),
-                                            td(contact.last()),
-                                            td(contact.phone()),
-                                            td(contact.email()),
-                                            td(
-                                                    a("Edit").withHref("/contacts/" + contact.id() + "/edit"),
-                                                    a("View").withHref("/contacts/" + contact.id())
-                                            )
-                                    );
-                                }),
-                                iff(contacts.hasNext(),
-                                        tr(
-                                                td().withColspan("5").withStyle("text-align: center;").with(
-                                                        span("Loading More...")
-                                                                .attr("hx-trigger", "revealed")
-                                                                .attr("hx-get", "/contacts?page=" + (page + 1))
-                                                                .attr("hx-select", "tbody > tr")
-                                                                .attr("hx-target", "closest tr")
-                                                                .attr("hx-swap", "outerHTML")
-                                                )
-                                        )
-                                )
+                                searchResults.include(model)
                         )
                 ),
                 p(

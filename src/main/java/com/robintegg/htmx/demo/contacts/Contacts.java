@@ -44,13 +44,20 @@ public class Contacts {
         );
     }
 
-    public List<Contact> search(String q) {
-        return contactList.stream()
+    public PagedList<Contact> search(String q, int page) {
+        int end = page * 10;
+        int start = end - 10;
+        List<Contact> filteredList = contactList.stream()
                 .filter(c -> c.email().toLowerCase().contains(q.toLowerCase()) ||
                         c.phone().toLowerCase().contains(q.toLowerCase()) ||
                         c.first().toLowerCase().contains(q.toLowerCase()) ||
                         c.last().toLowerCase().contains(q.toLowerCase()))
                 .toList();
+        return new PagedList<>(
+                new ArrayList<>(filteredList.subList(start, min(filteredList.size(), end))),
+                page > 1,
+                end <= filteredList.size(),
+                filteredList.size());
     }
 
     public void add(Contact c) {

@@ -25,6 +25,7 @@ public class ContactsController {
 
   @GetMapping("/contacts")
   public String contacts(
+          @RequestHeader(name="HX-Trigger", required = false) String hxTrigger,
           @RequestParam(name = "q", required = false) String q,
           @RequestParam(name = "msg", required = false) String msg,
           @RequestParam(name="page", required = false, defaultValue = "1") int page,
@@ -33,12 +34,16 @@ public class ContactsController {
     if (q == null) {
       model.addAttribute("contacts", contacts.all(page));
     } else {
-      model.addAttribute("contacts", contacts.search(q));
+      model.addAttribute("contacts", contacts.search(q, page));
     }
     model.addAttribute("q", q);
     model.addAttribute("msg", msg);
     model.addAttribute("page", page);
-    return "indexPage";
+    if(hxTrigger != null) {
+      return "searchResults";
+    } else {
+      return "indexPage";
+    }
   }
 
   @GetMapping("/contacts/new")
