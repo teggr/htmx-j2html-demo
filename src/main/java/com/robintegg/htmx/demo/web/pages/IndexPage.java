@@ -71,7 +71,17 @@ public class IndexPage implements View {
                         )
                 ),
                 p(
-                        a("Add Contact").withHref("/contacts/new")
+                        a("Add Contact").withHref("/contacts/new"),
+                        text(" "),
+                        span()
+                                .attr("hx-trigger", "revealed")
+                                .attr("hx-get", "/contacts/count")
+                                .with(
+                                        img()
+                                                .withId("spinner")
+                                                .withClass("htmx-indicator")
+                                                .withSrc("https://raw.githubusercontent.com/n3r4zzurr0/svg-spinners/main/svg-css/90-ring.svg")
+                                )
                 )
         ).render(IndentedHtml.into(response.getWriter()));
 

@@ -78,4 +78,9 @@ public class Contacts {
         Contact contact = find(id);
         contactList.remove(contact);
     }
+
+    public int count() {
+        return contactList.size();
+    }
+
 }
