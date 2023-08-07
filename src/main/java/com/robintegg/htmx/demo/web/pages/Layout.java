@@ -32,6 +32,12 @@ public class Layout {
             .withTitle("Contacts App")
             .with(
                 link().withRel("stylesheet").withHref("https://unpkg.com/missing.css@1.0.9/dist/missing.min.css"),
+                style().with(rawHtml("""
+                        tr.htmx-swapping {
+                            opacity: 0;
+                            transition: opacity 1s ease-out;
+                        }
+                        """)),
                 script().withSrc("https://unpkg.com/htmx.org")
             ),
         body().attr("hx-boost", true).with(

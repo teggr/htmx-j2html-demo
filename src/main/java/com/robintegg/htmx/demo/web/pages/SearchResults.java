@@ -37,7 +37,12 @@ public class SearchResults implements View {
                             td(contact.email()),
                             td(
                                     a("Edit").withHref("/contacts/" + contact.id() + "/edit"),
-                                    a("View").withHref("/contacts/" + contact.id())
+                                    a("View").withHref("/contacts/" + contact.id()),
+                                    a("Delete").withHref("#")
+                                            .attr("hx-confirm", "Are you sure you want to delete this contact?")
+                                            .attr("hx-delete","/contacts/" + contact.id())
+                                            .attr("hx-target", "closest tr")
+                                            .attr("hx-swap", "outerHTML")
                             )
                     );
                 }),

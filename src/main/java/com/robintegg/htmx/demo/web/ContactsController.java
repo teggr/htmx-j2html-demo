@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.MapBindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -101,10 +102,18 @@ public class ContactsController {
     }
 
     @DeleteMapping("/contacts/{id}")
-    public RedirectView deleteContact(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+    public ModelAndView deleteContact(
+            @PathVariable("id") Integer id,
+            @RequestHeader(name = "HX-Trigger", required = false) String hxTrigger,
+            Model model,
+            RedirectAttributes redirectAttributes) {
         contacts.delete(id);
-        redirectAttributes.addAttribute("msg", "Deleted Contact");
-        return new RedirectView("/contacts", true, false);
+        if ("delete-btn".equals(hxTrigger)) {
+            redirectAttributes.addAttribute("msg", "Deleted Contact");
+            return new ModelAndView(new RedirectView("/contacts", true, false));
+        } else {
+            return new ModelAndView("emptyView", model.asMap());
+        }
     }
 
     @GetMapping(path = "/contacts/{id}/email", produces = MediaType.TEXT_PLAIN_VALUE)
