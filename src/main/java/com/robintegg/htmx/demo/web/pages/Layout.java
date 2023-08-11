@@ -37,6 +37,26 @@ public class Layout {
                             opacity: 0;
                             transition: opacity 1s ease-out;
                         }
+                        .progress {
+                            height: 20px;
+                            margin-bottom: 20px;
+                            overflow: hidden;
+                            background-color: #f5f5f5;
+                            border-radius: 4px;
+                            box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+                        }
+                        .progress-bar {
+                            float: left;
+                            width: 0%;
+                            height: 100%;
+                            font-size: 12px;
+                            line-height: 20px;
+                            color: #fff;
+                            text-align: center;
+                            background-color: #337ab7;
+                            box-shadow: inset 0 -px 0 rgba(0,0,0,.15);
+                            transition: width .6s ease;
+                        }
                         """)),
                 script().withSrc("https://unpkg.com/htmx.org")
             ),

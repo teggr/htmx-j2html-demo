@@ -1,5 +1,6 @@
 package com.robintegg.htmx.demo.web;
 
+import com.robintegg.htmx.demo.archive.Archive;
 import com.robintegg.htmx.demo.contacts.Contact;
 import com.robintegg.htmx.demo.contacts.Contacts;
 import jakarta.validation.Valid;
@@ -20,9 +21,11 @@ import java.util.Map;
 public class ContactsController {
 
     private Contacts contacts;
+    private Archive archive;
 
-    public ContactsController(Contacts contacts) {
+    public ContactsController(Contacts contacts, Archive archive) {
         this.contacts = contacts;
+        this.archive = archive;
     }
 
     @GetMapping("/contacts")
@@ -41,8 +44,9 @@ public class ContactsController {
         model.addAttribute("q", q);
         model.addAttribute("msg", msg);
         model.addAttribute("page", page);
+        model.addAttribute("archive", archive);
         if (hxTrigger != null) {
-            return "searchResults";
+            return "rowsView";
         } else {
             return "indexPage";
         }
@@ -67,7 +71,6 @@ public class ContactsController {
             return "redirect:/contacts";
         }
     }
-
 
     @GetMapping("/contacts/{id}")
     public String viewContact(@PathVariable("id") Integer id, Model model) {
@@ -135,6 +138,7 @@ public class ContactsController {
         }
     }
 
+
     @GetMapping(path = "/contacts/count", produces = MediaType.TEXT_PLAIN_VALUE)
     @ResponseBody
     public String contactCount() {
@@ -146,7 +150,7 @@ public class ContactsController {
             @RequestParam("selected_contact_ids") List<Integer> ids,
             Model model) {
         contacts.delete(ids);
-        return contacts(null,null, "Deleted Contacts!", 1, model);
+        return contacts(null, null, "Deleted Contacts!", 1, model);
     }
 
 }

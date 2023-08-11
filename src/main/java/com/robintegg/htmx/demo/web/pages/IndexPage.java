@@ -17,9 +17,11 @@ import static j2html.TagCreator.*;
 public class IndexPage implements View {
 
     private final RowsView rowsView;
+    private final ArchiveView archiveView;
 
-    public IndexPage(RowsView rowsView) {
+    public IndexPage(RowsView rowsView, ArchiveView archiveView) {
         this.rowsView = rowsView;
+        this.archiveView = archiveView;
     }
 
     @Override
@@ -31,6 +33,7 @@ public class IndexPage implements View {
         Layout.withContent(
                 model,
                 request,
+                archiveView.include(model),
                 form()
                         .withAction("/contacts")
                         .withMethod("get")

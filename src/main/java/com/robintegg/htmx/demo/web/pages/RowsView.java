@@ -18,6 +18,11 @@ import static j2html.TagCreator.*;
 public class RowsView implements View {
 
     @Override
+    public String getContentType() {
+        return MediaType.TEXT_HTML_VALUE;
+    }
+
+    @Override
     public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
         include(model).render(IndentedHtml.into(response.getWriter()));
     }
@@ -65,11 +70,6 @@ public class RowsView implements View {
                 )
         );
 
-    }
-
-    @Override
-    public String getContentType() {
-        return MediaType.TEXT_HTML_VALUE;
     }
 
 
